@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EH Communications — Elysian Hues</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f4f0;
+    --mid: #888;
+    --line: rgba(255,255,255,0.12);
+    --line-dark: rgba(0,0,0,0.1);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Montserrat', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 60px;
+    mix-blend-mode: normal;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.9) 0%, transparent 100%);
+  }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 13px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 48px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(245,244,240,0.6);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: var(--black);
+    overflow: hidden;
+  }
+
+  .hero-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 80px 80px;
+    animation: gridDrift 30s linear infinite;
+    opacity: 0.5;
+    z-index: 1;
+  }
+
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.06) 0%, transparent 60%),
+      linear-gradient(180deg, rgba(10,10,10,0.18) 0%, rgba(10,10,10,0.48) 55%, rgba(10,10,10,0.82) 100%);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 0;
+    filter: saturate(0.9) contrast(1.05) brightness(0.72);
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .hero.has-video .hero-video {
+    opacity: 0.55;
+  }
+
+  .hero-fallback {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.06) 0%, transparent 60%),
+      linear-gradient(180deg, rgba(10,10,10,0.15) 0%, rgba(10,10,10,0.45) 55%, rgba(10,10,10,0.82) 100%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  @media (min-aspect-ratio: 16/9) {
+    .hero-video {
+      width: 100vw;
+      height: calc(100vw * 9 / 16);
+    }
+  }
+
+  @media (max-aspect-ratio: 16/9) {
+    .hero-video {
+      width: calc(100vh * 16 / 9);
+      height: 100vh;
+    }
+  }
+
+  @keyframes gridDrift {
+    from { transform: translateY(0); }
+    to { transform: translateY(80px); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 3;
+  }
+
+  .hero-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: rgba(245,244,240,0.4);
+    margin-bottom: 32px;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(64px, 9vw, 130px);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    margin-bottom: 40px;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: rgba(245,244,240,0.5);
+  }
+
+  .hero-line {
+    width: 1px;
+    height: 60px;
+    background: rgba(245,244,240,0.25);
+    margin: 0 auto 32px;
+  }
+
+  .hero-sub {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(245,244,240,0.5);
+    max-width: 360px;
+    margin: 0 auto;
+    line-height: 2;
+  }
+
+  .hero-ctas {
+    margin-top: 36px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .hero-cta {
+    min-width: 190px;
+    padding: 16px 30px;
+    border: 1px solid rgba(245,244,240,0.28);
+    background: rgba(255,255,255,0.03);
+    color: var(--white);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 10px;
+    line-height: 1.2;
+    transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    backdrop-filter: blur(12px);
+  }
+
+  .hero-cta:hover {
+    transform: translateY(-2px);
+    background: rgba(245,244,240,0.08);
+    border-color: rgba(245,244,240,0.45);
+  }
+
+  .hero-cta.primary {
+    background: var(--white);
+    color: var(--black);
+    border-color: var(--white);
+  }
+
+  .hero-cta.primary:hover {
+    background: #fff;
+    color: var(--black);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(245,244,240,0.3);
+    animation: scrollPulse 2.5s ease-in-out infinite;
+  }
+
+  .hero-scroll::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 40px;
+    background: rgba(245,244,240,0.2);
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: translateX(-50%) translateY(0); }
+    50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 120px 60px; }
+
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: rgba(245,244,240,0.35);
+    margin-bottom: 60px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: rgba(245,244,240,0.2);
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 120px;
+    align-items: start;
+  }
+
+  .about-left {}
+
+  .about-headline {
+    font-family: var(--serif);
+    font-size: clamp(38px, 4vw, 60px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 40px;
+  }
+
+  .about-headline em { font-style: italic; color: rgba(245,244,240,0.5); }
+
+  .about-body {
+    font-size: 13px;
+    line-height: 2;
+    color: rgba(245,244,240,0.55);
+    max-width: 420px;
+  }
+
+  .about-right {
+    padding-top: 80px;
+  }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid var(--line);
+    padding: 28px 0;
+  }
+
+  .stat-row:last-child { border-bottom: 1px solid var(--line); }
+
+  .stat-number {
+    font-family: var(--serif);
+    font-size: 48px;
+    font-weight: 300;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(245,244,240,0.4);
+    max-width: 120px;
+    text-align: right;
+    line-height: 1.6;
+    margin-top: 6px;
+  }
+
+  /* ── SERVICES ── */
+  #services {
+    background: var(--white);
+    color: var(--black);
+  }
+
+  #services .section-label {
+    color: rgba(10,10,10,0.35);
+  }
+
+  #services .section-label::after {
+    background: rgba(10,10,10,0.15);
+  }
+
+  .services-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .service-item {
+    padding: 48px 40px;
+    border-right: 1px solid var(--line-dark);
+    border-bottom: 1px solid var(--line-dark);
+    transition: background 0.3s;
+  }
+
+  .service-item:nth-child(3n) { border-right: none; }
+  .service-item:nth-child(n+7) { border-bottom: none; }
+
+  .service-item:hover { background: var(--black); color: var(--white); }
+  .service-item:hover .service-num { color: rgba(245,244,240,0.25); }
+  .service-item:hover .service-desc { color: rgba(245,244,240,0.5); }
+
+  .service-num {
+    font-family: var(--serif);
+    font-size: 13px;
+    color: rgba(10,10,10,0.25);
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .service-name {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .service-desc {
+    font-size: 11px;
+    line-height: 1.9;
+    color: rgba(10,10,10,0.5);
+  }
+
+  /* ── SECTORS ── */
+  #sectors {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .sectors-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+  }
+
+  .sector-tag {
+    padding: 18px 32px;
+    border: 1px solid var(--line);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,244,240,0.5);
+    margin-right: -1px;
+    margin-bottom: -1px;
+    cursor: default;
+    transition: all 0.3s;
+  }
+
+  .sector-tag:hover {
+    background: var(--white);
+    color: var(--black);
+    border-color: var(--white);
+    z-index: 1;
+    position: relative;
+  }
+
+  /* ── CLIENTS ── */
+  #clients {
+    background: #0f0f0f;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .clients-intro {
+    max-width: 1200px;
+    margin: 0 auto 80px;
+  }
+
+  .clients-headline {
+    font-family: var(--serif);
+    font-size: clamp(32px, 3.5vw, 52px);
+    font-weight: 300;
+    line-height: 1.2;
+    max-width: 500px;
+  }
+
+  .clients-headline em { font-style: italic; color: rgba(245,244,240,0.4); }
+
+  .clients-marquee-wrap {
+    overflow: hidden;
+    padding: 40px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .clients-marquee {
+    display: flex;
+    gap: 80px;
+    animation: marquee 25s linear infinite;
+    white-space: nowrap;
+  }
+
+  .clients-marquee:hover { animation-play-state: paused; }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .client-name {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(245,244,240,0.3);
+    transition: color 0.3s;
+    flex-shrink: 0;
+  }
+
+  .client-name:hover { color: var(--white); }
+
+  /* ── FOUNDER ── */
+  #founder {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 100px;
+    align-items: start;
+  }
+
+  .founder-img-wrap {
+    position: relative;
+  }
+
+  .founder-img-placeholder {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: #f3f1eb;
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+
+  .founder-photo {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center 15%;
+  }
+
+  .founder-img-caption {
+    position: absolute;
+    left: 24px;
+    bottom: 24px;
+    z-index: 1;
+    padding: 10px 14px;
+    background: rgba(10,10,10,0.78);
+    border: 1px solid rgba(255,255,255,0.14);
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  .founder-frame {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: -20px;
+    bottom: -20px;
+    border: 1px solid rgba(255,255,255,0.08);
+    pointer-events: none;
+  }
+
+  .founder-info {}
+
+  .founder-label {
+    font-size: 9px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: rgba(245,244,240,0.3);
+    margin-bottom: 8px;
+  }
+
+  .founder-name {
+    font-family: var(--serif);
+    font-size: 52px;
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .founder-title {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-style: italic;
+    color: rgba(245,244,240,0.4);
+    margin-bottom: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .founder-bio {
+    font-size: 13px;
+    line-height: 2.1;
+    color: rgba(245,244,240,0.55);
+    margin-bottom: 32px;
+  }
+
+  .founder-edu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 40px;
+  }
+
+  .edu-item {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(245,244,240,0.35);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .edu-item::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: rgba(245,244,240,0.2);
+    flex-shrink: 0;
+  }
+
+  /* ── PRESENCE ── */
+  #presence {
+    background: var(--white);
+    color: var(--black);
+    text-align: center;
+  }
+
+  .presence-headline {
+    font-family: var(--serif);
+    font-size: clamp(44px, 6vw, 90px);
+    font-weight: 300;
+    line-height: 0.95;
+    max-width: 900px;
+    margin: 0 auto 80px;
+  }
+
+  .presence-headline em { font-style: italic; color: rgba(10,10,10,0.3); }
+
+  .presence-cities {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    border-top: 1px solid var(--line-dark);
+    border-bottom: 1px solid var(--line-dark);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .city {
+    flex: 1;
+    padding: 40px 24px;
+    border-right: 1px solid var(--line-dark);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(10,10,10,0.4);
+  }
+
+  .city:last-child { border-right: none; }
+  .city strong { display: block; font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--black); letter-spacing: 0; margin-bottom: 4px; }
+
+  /* ── CONTACT ── */
+  #contact {
+    position: relative;
+    overflow: hidden;
+    padding: 160px 60px;
+    background:
+      radial-gradient(circle at 12% 18%, rgba(255,255,255,0.06) 0%, transparent 30%),
+      radial-gradient(circle at 88% 8%, rgba(255,255,255,0.04) 0%, transparent 24%),
+      linear-gradient(180deg, #101010 0%, #090909 100%);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  #contact::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 88px 88px;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .contact-shell {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+    gap: 48px;
+    align-items: stretch;
+  }
+
+  .contact-copy {
+    padding: 22px 0;
+  }
+
+  .contact-pre {
+    font-size: 9px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: rgba(245,244,240,0.35);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .contact-pre::after {
+    content: '';
+    width: 60px;
+    height: 1px;
+    background: rgba(245,244,240,0.18);
+  }
+
+  .contact-headline {
+    font-family: var(--serif);
+    font-size: clamp(44px, 6vw, 92px);
+    font-weight: 300;
+    line-height: 0.92;
+    max-width: 640px;
+    margin-bottom: 24px;
+    text-align: left;
+  }
+
+  .contact-headline em { font-style: italic; color: rgba(245,244,240,0.38); }
+
+  .contact-body {
+    max-width: 540px;
+    font-size: 14px;
+    line-height: 2;
+    color: rgba(245,244,240,0.56);
+    margin-bottom: 36px;
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .contact-action {
+    min-width: 190px;
+    padding: 16px 28px;
+    border: 1px solid rgba(245,244,240,0.22);
+    background: rgba(255,255,255,0.03);
+    color: var(--white);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    font-size: 10px;
+    line-height: 1.2;
+    text-align: center;
+    transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .contact-action:hover {
+    transform: translateY(-2px);
+    border-color: rgba(245,244,240,0.45);
+    background: rgba(245,244,240,0.08);
+  }
+
+  .contact-action.primary {
+    background: var(--white);
+    color: var(--black);
+    border-color: var(--white);
+  }
+
+  .contact-action.primary:hover {
+    background: #fff;
+    color: var(--black);
+  }
+
+  .contact-note {
+    margin-top: 24px;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(245,244,240,0.3);
+  }
+
+  .contact-panel {
+    position: relative;
+    padding: 34px;
+    border: 1px solid rgba(245,244,240,0.12);
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(14px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .contact-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(245,244,240,0.06) 0%, transparent 30%);
+    pointer-events: none;
+  }
+
+  .contact-panel-label {
+    position: relative;
+    z-index: 1;
+    font-size: 9px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: rgba(245,244,240,0.35);
+    margin-bottom: 24px;
+  }
+
+  .contact-card {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(245,244,240,0.12);
+  }
+
+  .contact-card:last-of-type {
+    border-bottom: none;
+  }
+
+  .contact-card-label {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(245,244,240,0.34);
+    margin-bottom: 10px;
+  }
+
+  .contact-card-value {
+    display: inline-block;
+    font-family: var(--serif);
+    font-size: 28px;
+    line-height: 1.05;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .contact-card-value:hover {
+    color: rgba(245,244,240,0.74);
+  }
+
+  .contact-card-note {
+    max-width: 190px;
+    font-size: 12px;
+    line-height: 1.9;
+    color: rgba(245,244,240,0.52);
+    text-align: right;
+  }
+
+  .contact-badges {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  .contact-badge {
+    padding: 10px 14px;
+    border: 1px solid rgba(245,244,240,0.15);
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(245,244,240,0.45);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 32px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: var(--serif);
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: rgba(245,244,240,0.3);
+  }
+
+  .footer-copy {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: rgba(245,244,240,0.2);
+  }
+
+  /* ── FADE-IN ANIMATION ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.15s; }
+  .reveal-delay-2 { transition-delay: 0.3s; }
+  .reveal-delay-3 { transition-delay: 0.45s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 24px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    .hero-ctas { margin-top: 28px; width: min(100%, 320px); flex-direction: column; }
+    .hero-cta { width: 100%; min-width: 0; }
+
+    .about { grid-template-columns: 1fr; gap: 60px; }
+    .about-right { padding-top: 0; }
+
+    .services-grid { grid-template-columns: 1fr; }
+    .service-item { border-right: none; border-bottom: 1px solid var(--line-dark) !important; }
+    .service-item:last-child { border-bottom: none !important; }
+
+    #founder { grid-template-columns: 1fr; gap: 60px; }
+    .founder-img-wrap { max-width: 280px; }
+
+    .presence-cities { flex-direction: column; }
+    .city { border-right: none; border-bottom: 1px solid var(--line-dark); }
+    .city:last-child { border-bottom: none; }
+
+    #contact { padding: 100px 24px; }
+    .contact-shell { grid-template-columns: 1fr; gap: 28px; }
+    .contact-copy { padding: 0; }
+    .contact-headline { max-width: none; }
+    .contact-body { max-width: none; }
+    .contact-actions { flex-direction: column; align-items: stretch; }
+    .contact-action { width: 100%; min-width: 0; }
+    .contact-panel { padding: 24px; }
+    .contact-card { flex-direction: column; }
+    .contact-card-note { max-width: none; text-align: left; }
+    .contact-card-value { font-size: 24px; word-break: break-word; }
+
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-bg::before, .clients-marquee, .hero-scroll { animation: none; }
+    .hero-video { display: none; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">EH Communications</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#clients">Clients</a></li>
+    <li><a href="#founder">Founder</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-fallback" aria-hidden="true"></div>
+    <iframe
+      class="hero-video"
+      src="about:blank"
+      title="Hero background video"
+      aria-hidden="true"
+      tabindex="-1"
+      referrerpolicy="origin-when-cross-origin"
+      allow="autoplay; encrypted-media; picture-in-picture">
+    </iframe>
+  </div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Award-winning PR &amp; Marketing Agency · New Delhi</p>
+    <h1 class="hero-title">
+      Elysian<br>
+      <em>Hues</em>
+    </h1>
+    <div class="hero-line"></div>
+    <p class="hero-sub">Where strategy meets narrative.<br>Where brands become stories.</p>
+    <div class="hero-ctas reveal reveal-delay-2">
+      <a href="mailto:business.elysianhues@gmail.com?subject=New%20Project%20Inquiry" class="hero-cta primary">Start a Project</a>
+      <a href="#services" class="hero-cta">Explore Services</a>
+    </div>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about">
+    <div class="about-left">
+      <p class="section-label reveal">About the Agency</p>
+      <h2 class="about-headline reveal reveal-delay-1">
+        Turning concepts into <em>captivating</em> narratives.
+      </h2>
+      <p class="about-body reveal reveal-delay-2">
+        EH Communications (Elysian Hues) is a full-service PR and marketing agency based in New Delhi, working across India and UAE. We craft tailored strategic communication plans that blend creativity with strategy — amplifying your brand's voice across every platform that matters.
+      </p>
+    </div>
+    <div class="about-right">
+      <div class="stat-row reveal">
+        <div class="stat-number">100+</div>
+        <div class="stat-label">Startups &amp; Brands Launched</div>
+      </div>
+      <div class="stat-row reveal reveal-delay-1">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">High-Impact Luxury Events</div>
+      </div>
+      <div class="stat-row reveal reveal-delay-2">
+        <div class="stat-number">8+</div>
+        <div class="stat-label">Sectors Served Across Industries</div>
+      </div>
+      <div class="stat-row reveal reveal-delay-3">
+        <div class="stat-number">2</div>
+        <div class="stat-label">Countries — India &amp; UAE</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <p class="section-label reveal" style="max-width:1200px;margin:0 auto 60px;">What We Do</p>
+  <div class="services-grid">
+    <div class="service-item reveal">
+      <div class="service-num">01</div>
+      <h3 class="service-name">Public Relations</h3>
+      <p class="service-desc">Media relations, press placements, press releases, and strategic storytelling that keeps your brand in the conversation.</p>
+    </div>
+    <div class="service-item reveal reveal-delay-1">
+      <div class="service-num">02</div>
+      <h3 class="service-name">Social Media Marketing</h3>
+      <p class="service-desc">Content planning, community growth, and platform-first storytelling designed to build consistent engagement.</p>
+    </div>
+    <div class="service-item reveal reveal-delay-2">
+      <div class="service-num">03</div>
+      <h3 class="service-name">Performance Marketing</h3>
+      <p class="service-desc">Paid campaigns across Meta, Google, and other channels focused on lead generation, reach, and measurable ROI.</p>
+    </div>
+    <div class="service-item reveal">
+      <div class="service-num">04</div>
+      <h3 class="service-name">Crisis Management</h3>
+      <p class="service-desc">Rapid response planning, monitoring, spokesperson support, and reputation recovery when timing matters most.</p>
+    </div>
+    <div class="service-item reveal reveal-delay-1">
+      <div class="service-num">05</div>
+      <h3 class="service-name">Influencer Marketing</h3>
+      <p class="service-desc">Curated creator partnerships, seeding, campaigns, and content collaborations aligned to your audience and goals.</p>
+    </div>
+    <div class="service-item reveal reveal-delay-2">
+      <div class="service-num">06</div>
+      <h3 class="service-name">Celebrity Associations</h3>
+      <p class="service-desc">Celebrity collaborations, brand endorsements, appearances, and association planning built to elevate visibility.</p>
+    </div>
+    <div class="service-item reveal">
+      <div class="service-num">07</div>
+      <h3 class="service-name">Events</h3>
+      <p class="service-desc">Launches, brand experiences, and high-touch events with end-to-end planning, execution, and guest flow.</p>
+    </div>
+    <div class="service-item reveal reveal-delay-1">
+      <div class="service-num">08</div>
+      <h3 class="service-name">Press Conferences</h3>
+      <p class="service-desc">Press events, media briefings, and announcement formats designed to deliver clarity, coverage, and recall.</p>
+    </div>
+    <div class="service-item reveal reveal-delay-2">
+      <div class="service-num">09</div>
+      <h3 class="service-name">Web Development</h3>
+      <p class="service-desc">Brand-led websites and landing pages that pair clean visuals with strong structure, speed, and usability.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTORS -->
+<section id="sectors">
+  <div>
+    <p class="section-label reveal">Industries We Serve</p>
+    <div class="sectors-flex">
+      <div class="sector-tag reveal">Fashion &amp; Lifestyle</div>
+      <div class="sector-tag reveal reveal-delay-1">Beauty &amp; Wellness</div>
+      <div class="sector-tag reveal reveal-delay-2">Financial Services &amp; Cybersecurity</div>
+      <div class="sector-tag reveal">Healthcare &amp; Pharma</div>
+      <div class="sector-tag reveal reveal-delay-1">Real Estate &amp; Infrastructure</div>
+      <div class="sector-tag reveal reveal-delay-2">Celebrity PR</div>
+      <div class="sector-tag reveal">Technology</div>
+      <div class="sector-tag reveal reveal-delay-1">Startups &amp; New Age Enterprises</div>
+      <div class="sector-tag reveal reveal-delay-2">Hospitality &amp; Travel</div>
+      <div class="sector-tag reveal">Food &amp; Beverage</div>
+      <div class="sector-tag reveal reveal-delay-1">Luxury Retail</div>
+      <div class="sector-tag reveal reveal-delay-2">Education &amp; EdTech</div>
+      <div class="sector-tag reveal">Entertainment &amp; Media</div>
+      <div class="sector-tag reveal reveal-delay-1">Sports &amp; Wellness</div>
+      <div class="sector-tag reveal reveal-delay-2">Consumer Tech</div>
+      <div class="sector-tag reveal">Automotive &amp; Mobility</div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section id="clients">
+  <div class="clients-intro">
+    <p class="section-label reveal">Our Clients</p>
+    <h2 class="clients-headline reveal reveal-delay-1">
+      100+ brands trust us with their <em>story.</em>
+    </h2>
+  </div>
+  <div class="clients-marquee-wrap">
+    <div class="clients-marquee">
+      <span class="client-name">Biba</span>
+      <span class="client-name">Netflix</span>
+      <span class="client-name">DLF</span>
+      <span class="client-name">SpiceJet</span>
+      <span class="client-name">Sennheiser</span>
+      <span class="client-name">Kimirica</span>
+      <span class="client-name">Aroma Magic</span>
+      <span class="client-name">M&amp;S</span>
+      <span class="client-name">Goethe Institut</span>
+      <span class="client-name">IdeaForge</span>
+      <span class="client-name">Aquamarine</span>
+      <span class="client-name">Lucullan</span>
+      <span class="client-name">House of Tuhina</span>
+      <span class="client-name">Ultrakriti London</span>
+      <span class="client-name">Partho Dang</span>
+      <!-- duplicate for seamless loop -->
+      <span class="client-name">Biba</span>
+      <span class="client-name">Netflix</span>
+      <span class="client-name">DLF</span>
+      <span class="client-name">SpiceJet</span>
+      <span class="client-name">Sennheiser</span>
+      <span class="client-name">Kimirica</span>
+      <span class="client-name">Aroma Magic</span>
+      <span class="client-name">M&amp;S</span>
+      <span class="client-name">Goethe Institut</span>
+      <span class="client-name">IdeaForge</span>
+      <span class="client-name">Aquamarine</span>
+      <span class="client-name">Lucullan</span>
+      <span class="client-name">House of Tuhina</span>
+      <span class="client-name">Ultrakriti London</span>
+      <span class="client-name">Partho Dang</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section>
+  <div id="founder">
+    <div class="founder-img-wrap reveal">
+      <div class="founder-img-placeholder">
+        <img class="founder-photo" src="deepali.png" alt="Deepali Mathur, founder of EH Communications">
+        <span class="founder-img-caption">Deepali Mathur</span>
+      </div>
+      <div class="founder-frame"></div>
+    </div>
+    <div class="founder-info">
+      <p class="founder-label reveal">Meet the Founder</p>
+      <h2 class="founder-name reveal reveal-delay-1">Deepali<br>Mathur</h2>
+      <p class="founder-title reveal reveal-delay-2">CEO &amp; Founder — EH Communications &amp; TTI Group</p>
+      <p class="founder-bio reveal">
+        A Delhi-based entrepreneur renowned for blending creative vision with astute business strategy. Deepali has built a career that transcends industry boundaries — navigating strategic PR, luxury marketing, experiential design, and entrepreneurship across India, UAE, and beyond.
+      </p>
+      <p class="founder-bio reveal reveal-delay-1">
+        Under her leadership, the agency has conceptualised and executed over 100+ startups and established brands globally, 50 high-impact B2C luxury events, and made Tiny Tales India one of the country's leading exhibitions.
+      </p>
+      <div class="founder-edu">
+        <div class="edu-item reveal">NIFT, New Delhi</div>
+        <div class="edu-item reveal reveal-delay-1">Instituto Marangoni, Italy</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRESENCE -->
+<section id="presence">
+  <h2 class="presence-headline reveal">
+    We are a <em>PR</em> company shaping premium narratives.
+  </h2>
+  <div class="presence-cities">
+    <div class="city reveal">
+      <strong>New Delhi</strong>Headquarters
+    </div>
+    <div class="city reveal reveal-delay-1">
+      <strong>Dubai</strong>UAE Operations
+    </div>
+    <!-- <div class="city reveal reveal-delay-2">
+      <strong>Mumbai</strong>National Reach
+    </div>
+    <div class="city reveal reveal-delay-3">
+      <strong>London</strong>Global Network
+    </div> -->
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-shell">
+    <div class="contact-copy">
+      <p class="contact-pre reveal">Get in Touch</p>
+      <h2 class="contact-headline reveal reveal-delay-1">
+        Let&apos;s build something that feels <em>unmissable.</em>
+      </h2>
+      <p class="contact-body reveal reveal-delay-2">
+        From PR and social to performance, launches, and partnerships, EH Communications helps brands move with clarity, speed, and style.
+      </p>
+      <div class="contact-actions reveal reveal-delay-3">
+        <a href="mailto:business.elysianhues@gmail.com?subject=New%20Project%20Inquiry" class="contact-action primary">Start a Project</a>
+        <a href="#services" class="contact-action">Explore Services</a>
+      </div>
+      <div class="contact-note reveal reveal-delay-3">Prefer a direct route? Use the numbers and emails on the right.</div>
+    </div>
+    <div class="contact-panel reveal">
+      <div class="contact-panel-label">Direct Lines</div>
+      <div class="contact-card">
+        <div>
+          <div class="contact-card-label">Call</div>
+          <a href="tel:+919220923861" class="contact-card-value">+91 92209 23861</a>
+        </div>
+        <div class="contact-card-note">For quick briefs, launches, urgent support, and first conversations.</div>
+      </div>
+      <div class="contact-card">
+        <div>
+          <div class="contact-card-label">Email</div>
+          <a href="mailto:business.elysianhues@gmail.com?subject=New%20Project%20Inquiry" class="contact-card-value">business.elysianhues@gmail.com</a>
+        </div>
+        <div class="contact-card-note">Best for proposals, timelines, decks, and detailed project discussions.</div>
+      </div>
+      <div class="contact-card">
+        <div>
+          <div class="contact-card-label">Partnerships</div>
+          <a href="mailto:partnerships@elysianhues.com?subject=Partnership%20Inquiry" class="contact-card-value">partnerships@elysianhues.com</a>
+        </div>
+        <div class="contact-card-note">For collaborations, talent, and strategic alliance conversations.</div>
+      </div>
+      <!-- <div class="contact-badges">
+        <span class="contact-badge">India &amp; UAE</span>
+        <span class="contact-badge">PR, Social, Performance</span>
+        <span class="contact-badge">Events &amp; Launches</span>
+      </div> -->
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">EH Communications — Elysian Hues</span>
+  <span class="footer-copy">www.elysianhues.com &nbsp;·&nbsp; New Delhi &amp; UAE</span>
+</footer>
+
+<script>
+  // Intersection Observer for reveal animations
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Load the YouTube background video and fall back to the site origin for local previews.
+  const heroSection = document.querySelector('.hero');
+  const heroVideo = document.querySelector('.hero-video');
+  const heroVideoId = 'l6EzZafb1Pk';
+  const origin = location.origin && location.origin !== 'null'
+    ? location.origin
+    : 'https://www.elysianhues.com';
+
+  heroVideo.src = `https://www.youtube.com/embed/${heroVideoId}?autoplay=1&mute=1&loop=1&playlist=${heroVideoId}&controls=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&disablekb=1&fs=0&origin=${encodeURIComponent(origin)}`;
+  heroSection.classList.add('has-video');
+
+  // Prevent duplicate #sectors section issue
+  // (handled in CSS, sectors flex is inside the section)
+</script>
+
+</body>
+</html>
