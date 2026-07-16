@@ -111,6 +111,34 @@
       color: rgba(17, 17, 17, 0.98);
     }
 
+    .nav-socials {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .nav-links .nav-socials a {
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.25s ease;
+      line-height: 0;
+      opacity: 0.75;
+      padding: 0 !important;
+      width: 36px;
+      height: 36px;
+    }
+
+    .nav-links .nav-socials a:hover {
+      opacity: 1 !important;
+    }
+
+    @media (max-width: 900px) {
+      .nav-socials {
+        padding: 20px 0 10px;
+      }
+    }
+
     .nav-toggle {
       display: none;
       appearance: none;
@@ -679,6 +707,7 @@
       letter-spacing: 0.3em;
       text-transform: uppercase;
       color: #111111;
+      white-space: nowrap;
     }
 
     .founder-frame {
@@ -1299,6 +1328,65 @@
     .contact-card-label {
       color: #000000 !important;
     }
+
+    /* Infinite Client Logo Ticker */
+    .logo-ticker-container {
+      overflow: hidden;
+      background: #ffffff;
+      padding: 40px 0;
+      border-top: 1px solid rgba(17, 17, 17, 0.08);
+      border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+      display: flex;
+      align-items: center;
+      position: relative;
+      width: 100%;
+      z-index: 10;
+    }
+
+    .logo-ticker-inner {
+      display: flex;
+      width: max-content;
+      animation: logo-ticker-scroll 45s linear infinite;
+    }
+
+    .logo-ticker-inner:hover {
+      animation-play-state: paused;
+    }
+
+    .ticker-track {
+      display: flex;
+      align-items: center;
+      gap: 80px;
+      padding-right: 80px;
+    }
+
+    .ticker-track img {
+      height: 50px;
+      width: auto;
+      object-fit: contain;
+      opacity: 0.65;
+      transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+      filter: grayscale(100%);
+      mix-blend-mode: multiply;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .ticker-track img:hover {
+      opacity: 1;
+      filter: none;
+      transform: scale(1.05);
+    }
+
+    @keyframes logo-ticker-scroll {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      100% {
+        transform: translate3d(-50%, 0, 0);
+      }
+    }
   </style>
 </head>
 
@@ -1315,11 +1403,40 @@
       <span></span>
     </button>
     <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About Us</a></li>
       <li><a href="services.html">Services</a></li>
       <li><a href="clients.html">Clients</a></li>
       <li><a href="careers.html">Careers</a></li>
       <li><a href="media.html">Media Coverages</a></li>
+      <li class="nav-socials">
+        <a href="https://www.facebook.com/EHCommunication/" target="_blank" rel="noopener noreferrer"
+          aria-label="Facebook">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"
+            style="width: 16px; height: 16px; fill: currentColor;">
+            <path
+              d="M14 8.2h2.2V5.4h-2.5c-2.7 0-4.4 1.6-4.4 4.5V12H7v3h2.3V21h3.4v-6H15l.4-3h-3.2V9.8c0-.9.4-1.6 1.8-1.6Z" />
+          </svg>
+        </a>
+        <a href="https://www.instagram.com/ehcommunications" target="_blank" rel="noopener noreferrer"
+          aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"
+            style="width: 16px; height: 16px; fill: currentColor;">
+            <rect x="3.8" y="3.8" width="16.4" height="16.4" rx="4" fill="none" stroke="currentColor"
+              stroke-width="1.8" />
+            <circle cx="12" cy="12" r="3.6" fill="none" stroke="currentColor" stroke-width="1.8" />
+            <circle cx="17.4" cy="6.6" r="1.1" />
+          </svg>
+        </a>
+        <a href="https://www.linkedin.com/company/ehcommunications" target="_blank" rel="noopener noreferrer"
+          aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"
+            style="width: 16px; height: 16px; fill: currentColor;">
+            <path
+              d="M6.3 9.2H3.3V21h3V9.2ZM4.8 3.6A1.8 1.8 0 1 0 4.8 7.2 1.8 1.8 0 0 0 4.8 3.6ZM10 9.2h2.9v1.6c.5-.9 1.5-1.9 3.5-1.9 2.9 0 4.2 1.8 4.2 4.7V21h-3v-5.2c0-1.7-.3-2.8-1.9-2.8-1.5 0-2.4 1-2.4 2.7V21h-3V9.2Z" />
+          </svg>
+        </a>
+      </li>
     </ul>
   </nav>
 
@@ -1338,6 +1455,7 @@
         EH
         <span class="text-accent">COMMUNICATIONS</span>
       </h1>
+      <span>ELYSIAN HUES</span>
       <div class="hero-line"></div>
       <p class="hero-sub">Strategy meets narrative.<br>Brands become stories.</p>
       <div class="hero-ctas">
@@ -1347,6 +1465,82 @@
     </div>
     <div class="hero-scroll">Scroll</div>
   </section>
+
+  <!-- Client Logo Marquee Ticker
+  <div class="logo-ticker-container" aria-hidden="true">
+    <div class="logo-ticker-inner">
+      <div class="ticker-track">
+      <img src="client-logos/500+ BRANDS.png" alt="500+ BRANDS">
+      <img src="client-logos/anax.jpg" alt="anax">
+      <img src="client-logos/aroma magic.jfif" alt="aroma magic">
+      <img src="client-logos/biba.png" alt="biba">
+      <img src="client-logos/Care Pal Group.jpeg" alt="Care Pal Group">
+      <img src="client-logos/dillano.webp" alt="dillano">
+      <img src="client-logos/dlf logo.png" alt="dlf logo">
+      <img src="client-logos/drucare.png" alt="drucare">
+      <img src="client-logos/fitkids.png" alt="fitkids">
+      <img src="client-logos/foodcloud.png" alt="foodcloud">
+      <img src="client-logos/goe the institute.png" alt="goe the institute">
+      <img src="client-logos/IDEA FORGE.png" alt="IDEA FORGE">
+      <img src="client-logos/impact guru.png" alt="impact guru">
+      <img src="client-logos/jatin malik .jpg" alt="jatin malik ">
+      <img src="client-logos/KIMRICA.png" alt="KIMRICA">
+      <img src="client-logos/lucullan.jfif" alt="lucullan">
+      <img src="client-logos/m&S.png" alt="m&S">
+      <img src="client-logos/migo.jpeg" alt="migo">
+      <img src="client-logos/netflix.png" alt="netflix">
+      <img src="client-logos/PEE-BUDDY.jfif" alt="PEE-BUDDY">
+      <img src="client-logos/POSHTE.png" alt="POSHTE">
+      <img src="client-logos/rayan.png" alt="rayan">
+      <img src="client-logos/Realm logo.avif" alt="Realm logo">
+      <img src="client-logos/sajके.jfif" alt="sajके">
+      <img src="client-logos/sennheiser.png" alt="sennheiser">
+      <img src="client-logos/SENOCARE.jfif" alt="SENOCARE">
+      <img src="client-logos/spice jet .png" alt="spice jet ">
+      <img src="client-logos/spicwjwt.svg" alt="spicwjwt">
+      <img src="client-logos/sruti jindal.jfif" alt="sruti jindal">
+      <img src="client-logos/sugar box.jfif" alt="sugar box">
+      <img src="client-logos/tapp me.jfif" alt="tapp me">
+      <img src="client-logos/thomas Crick.png" alt="thomas Crick">
+      <img src="client-logos/Truth_and_Hair_Logo_858479ca-8e5d-47ee-9e23-c68d4e4e2ddb.jpg.webp" alt="Truth_and_Hair_Logo_858479ca-8e5d-47ee-9e23-c68d4e4e2ddb.jpg">
+      </div>
+      <div class="ticker-track">
+      <img src="client-logos/500+ BRANDS.png" alt="500+ BRANDS">
+      <img src="client-logos/anax.jpg" alt="anax">
+      <img src="client-logos/aroma magic.jfif" alt="aroma magic">
+      <img src="client-logos/biba.png" alt="biba">
+      <img src="client-logos/Care Pal Group.jpeg" alt="Care Pal Group">
+      <img src="client-logos/dillano.webp" alt="dillano">
+      <img src="client-logos/dlf logo.png" alt="dlf logo">
+      <img src="client-logos/drucare.png" alt="drucare">
+      <img src="client-logos/fitkids.png" alt="fitkids">
+      <img src="client-logos/foodcloud.png" alt="foodcloud">
+      <img src="client-logos/goe the institute.png" alt="goe the institute">
+      <img src="client-logos/IDEA FORGE.png" alt="IDEA FORGE">
+      <img src="client-logos/impact guru.png" alt="impact guru">
+      <img src="client-logos/jatin malik .jpg" alt="jatin malik ">
+      <img src="client-logos/KIMRICA.png" alt="KIMRICA">
+      <img src="client-logos/lucullan.jfif" alt="lucullan">
+      <img src="client-logos/m&S.png" alt="m&S">
+      <img src="client-logos/migo.jpeg" alt="migo">
+      <img src="client-logos/netflix.png" alt="netflix">
+      <img src="client-logos/PEE-BUDDY.jfif" alt="PEE-BUDDY">
+      <img src="client-logos/POSHTE.png" alt="POSHTE">
+      <img src="client-logos/rayan.png" alt="rayan">
+      <img src="client-logos/Realm logo.avif" alt="Realm logo">
+      <img src="client-logos/sajके.jfif" alt="sajके">
+      <img src="client-logos/sennheiser.png" alt="sennheiser">
+      <img src="client-logos/SENOCARE.jfif" alt="SENOCARE">
+      <img src="client-logos/spice jet .png" alt="spice jet ">
+      <img src="client-logos/spicwjwt.svg" alt="spicwjwt">
+      <img src="client-logos/sruti jindal.jfif" alt="sruti jindal">
+      <img src="client-logos/sugar box.jfif" alt="sugar box">
+      <img src="client-logos/tapp me.jfif" alt="tapp me">
+      <img src="client-logos/thomas Crick.png" alt="thomas Crick">
+      <img src="client-logos/Truth_and_Hair_Logo_858479ca-8e5d-47ee-9e23-c68d4e4e2ddb.jpg.webp" alt="Truth_and_Hair_Logo_858479ca-8e5d-47ee-9e23-c68d4e4e2ddb.jpg">
+      </div>
+    </div>
+  </div> -->
 
   <section id="about" data-nav-theme="light">
     <div class="about">
@@ -1407,13 +1601,13 @@
     </a>
     <a href="influencer-marketing.html" class="service-item reveal reveal-delay-1">
       <div class="service-num">05</div>
-      <h3 class="service-name">Influencer &amp; Celebrity</h3>
-      <p class="service-desc">Curated creator partnerships, celebrity collaborations, endorsements, activations, and styling placements.</p>
+      <h3 class="service-name">Influencer Marketing</h3>
+      <p class="service-desc">Curated creator partnerships, strategic influencer campaigns, brand alignments, and authentic brand storytelling.</p>
     </a>
-    <a href="media.html" class="service-item reveal reveal-delay-2">
+    <a href="celebrity-associations.html" class="service-item reveal reveal-delay-2">
       <div class="service-num">06</div>
-      <h3 class="service-name">Media Coverages</h3>
-      <p class="service-desc">Press clippings, features, and placements across leading publications showcasing editor-trusted coverage.</p>
+      <h3 class="service-name">Celebrity Associations</h3>
+      <p class="service-desc">Strategic celebrity partnerships, brand endorsements, red carpet appearances, and high-impact styling placements.</p>
     </a>
     <a href="events-launches.html" class="service-item reveal">
       <div class="service-num">07</div>
