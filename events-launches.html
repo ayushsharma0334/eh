@@ -25,6 +25,7 @@
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About Us</a></li>
       <li><a href="services.html">Services</a></li>
+      <li><a href="industries.html">Industries</a></li>
       <li><a href="clients.html">Clients</a></li>
       <li><a href="careers.html">Careers</a></li>
       <li><a href="media.html">Media Coverages</a></li>
@@ -116,6 +117,32 @@
     </div>
   </section>
 
+  <!-- Events Slideshow Carousel -->
+  <section id="events-slideshow" data-nav-theme="light"
+    style="border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #ffffff; padding: 80px 0;">
+    <div style="max-width: 1200px; margin: 0 auto; position: relative; padding: 0 60px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px;">
+        <div>
+          <p class="section-label reveal" style="margin-bottom: 12px;">GALLERY</p>
+          <h2 class="about-headline reveal reveal-delay-1"
+            style="margin: 0; font-size: clamp(32px, 3.5vw, 48px); line-height: 1.1;">Launches &amp; Events Gallery</h2>
+        </div>
+        <div class="carousel-nav reveal reveal-delay-2" style="display: flex; gap: 8px;">
+          <button class="carousel-btn prev" type="button" aria-label="Previous slide"
+            style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(17,17,17,0.14); background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #111111; transition: border-color 0.25s ease;">&larr;</button>
+          <button class="carousel-btn next" type="button" aria-label="Next slide"
+            style="width: 44px; height: 44px; border-radius: 999px; border: 1px solid rgba(17,17,17,0.14); background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #111111; transition: border-color 0.25s ease;">&rarr;</button>
+        </div>
+      </div>
+
+      <div class="coverages-carousel-container reveal reveal-delay-3">
+        <div class="coverages-carousel" id="events-carousel">
+          <!-- Populated dynamically via JavaScript -->
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="contact" data-nav-theme="light">
     <div class="contact-shell">
       <div class="contact-copy">
@@ -181,6 +208,16 @@
       </div>
     </div>
   </section>
+
+  <!-- Lightbox Modal Markup -->
+  <div class="lightbox-modal" aria-hidden="true" role="dialog">
+    <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
+    <button class="lightbox-nav-btn prev" aria-label="Previous image">&#10094;</button>
+    <button class="lightbox-nav-btn next" aria-label="Next image">&#10095;</button>
+    <div class="lightbox-content">
+      <img class="lightbox-img" src="" alt="Zoomed gallery image">
+    </div>
+  </div>
 
   <footer data-nav-theme="light">
     <span class="footer-copy">www.elysianhues.com</span>
@@ -280,6 +317,123 @@
       window.addEventListener('load', requestNavThemeSync);
       requestNavThemeSync();
     }
+
+    // Events Carousel & Lightbox
+    document.addEventListener('DOMContentLoaded', () => {
+      const carousel = document.querySelector('#events-carousel');
+      const prevBtn = document.querySelector('.carousel-btn.prev');
+      const nextBtn = document.querySelector('.carousel-btn.next');
+      const lightbox = document.querySelector('.lightbox-modal');
+      const lightboxImg = document.querySelector('.lightbox-img');
+      const closeBtn = document.querySelector('.lightbox-close');
+      const prevNav = document.querySelector('.lightbox-nav-btn.prev');
+      const nextNav = document.querySelector('.lightbox-nav-btn.next');
+
+      const imagesList = [
+        'events-slide/WhatsApp%20Image%202026-07-17%20at%2004.08.07.jpeg',
+        'events-slide/WhatsApp%20Image%202026-07-17%20at%2004.08.08%20(1).jpeg',
+        'events-slide/WhatsApp%20Image%202026-07-17%20at%2004.08.08%20(2).jpeg',
+        'events-slide/WhatsApp%20Image%202026-07-17%20at%2004.08.08.jpeg',
+        'events-slide/WhatsApp%20Image%202026-07-17%20at%2004.08.09%20(1).jpeg',
+        'events-slide/WhatsApp%20Image%202026-07-17%20at%2004.08.09%20(2).jpeg',
+        'events-slide/WhatsApp%20Image%202026-07-17%20at%2004.08.09.jpeg',
+        'events-slide/WhatsApp%20Image%202026-07-17%20at%2004.08.10.jpeg',
+        'events-slide/WhatsApp%20Image%202026-07-17%20at%2004.09.03.jpeg',
+        'events-slide/WhatsApp%20Image%202026-07-17%20at%2004.16.44.jpeg'
+      ];
+
+      // Populate carousel
+      if (carousel) {
+        carousel.innerHTML = '';
+        imagesList.forEach((src, idx) => {
+          const slide = document.createElement('div');
+          slide.className = 'coverage-slide';
+          const img = document.createElement('img');
+          img.src = src;
+          img.alt = `Events slideshow ${idx + 1}`;
+          img.loading = 'lazy';
+          img.decoding = 'async';
+          slide.appendChild(img);
+          carousel.appendChild(slide);
+        });
+      }
+
+      // Carousel Navigation
+      if (carousel && prevBtn && nextBtn) {
+        const getScrollAmount = () => {
+          const itemWidth = carousel.firstElementChild.getBoundingClientRect().width;
+          const gap = 16;
+          return itemWidth + gap;
+        };
+
+        prevBtn.addEventListener('click', () => {
+          carousel.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+        });
+
+        nextBtn.addEventListener('click', () => {
+          carousel.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+        });
+      }
+
+      // Lightbox Logic
+      let currentIndex = 0;
+      const showImage = (index) => {
+        if (index < 0) index = imagesList.length - 1;
+        if (index >= imagesList.length) index = 0;
+        currentIndex = index;
+        lightboxImg.src = imagesList[currentIndex];
+      };
+
+      if (carousel) {
+        carousel.addEventListener('click', (e) => {
+          const slide = e.target.closest('.coverage-slide');
+          if (slide) {
+            const index = Array.from(carousel.children).indexOf(slide);
+            showImage(index);
+            lightbox.classList.add('active');
+            lightbox.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+          }
+        });
+      }
+
+      const closeLightbox = () => {
+        lightbox.classList.remove('active');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      };
+
+      if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+
+      if (lightbox) {
+        lightbox.addEventListener('click', (e) => {
+          if (e.target === lightbox || e.target === lightbox.querySelector('.lightbox-content')) {
+            closeLightbox();
+          }
+        });
+      }
+
+      if (prevNav) {
+        prevNav.addEventListener('click', (e) => {
+          e.stopPropagation();
+          showImage(currentIndex - 1);
+        });
+      }
+
+      if (nextNav) {
+        nextNav.addEventListener('click', (e) => {
+          e.stopPropagation();
+          showImage(currentIndex + 1);
+        });
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (!lightbox || !lightbox.classList.contains('active')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
+        if (e.key === 'ArrowRight') showImage(currentIndex + 1);
+      });
+    });
   </script>
 
 </body>
