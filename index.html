@@ -65,6 +65,11 @@
       gap: 18px;
       padding: 28px 60px;
       background: transparent;
+      transition: background 0.35s ease;
+    }
+
+    nav.nav-scrolled {
+      background: #2a2a2a;
     }
 
     .nav-logo {
@@ -104,11 +109,11 @@
     }
 
     nav.nav-on-light .nav-links a {
-      color: rgba(17, 17, 17, 0.7);
+      color: rgba(255, 255, 255, 0.76);
     }
 
     nav.nav-on-light .nav-links a:hover {
-      color: rgba(17, 17, 17, 0.98);
+      color: #ffffff;
     }
 
     .nav-socials {
@@ -143,9 +148,9 @@
       display: none;
       appearance: none;
       position: relative;
-      border: 1px solid rgba(17, 17, 17, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       background: transparent;
-      color: #111111;
+      color: rgba(255, 255, 255, 0.92);
       width: 46px;
       height: 46px;
       padding: 12px;
@@ -155,16 +160,6 @@
       gap: 4px;
       flex-direction: column;
       transition: color 0.25s ease, border-color 0.25s ease;
-    }
-
-    nav.nav-on-dark .nav-toggle {
-      color: rgba(255, 255, 255, 0.92);
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    nav.nav-on-light .nav-toggle {
-      color: #111111;
-      border-color: rgba(17, 17, 17, 0.16);
     }
 
     .nav-toggle span {
@@ -240,6 +235,14 @@
       inset: 0;
       overflow: hidden;
       background: #090909;
+    }
+
+    .hero-video-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: transparent;
     }
 
     .hero-video {
@@ -1263,6 +1266,10 @@
       }
     }
 
+    .nav-socials {
+      display: none !important;
+    }
+
     @media (prefers-reduced-motion: reduce) {
 
       .hero::before,
@@ -1448,6 +1455,7 @@
           data-src="https://www.youtube.com/embed/E5DZQLkBJaY?autoplay=1&mute=1&controls=0&loop=1&playlist=E5DZQLkBJaY&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&fs=0&disablekb=1"
           loading="eager" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"
           tabindex="-1"></iframe>
+        <div class="hero-video-overlay" aria-hidden="true"></div>
       </div>
     </div>
     <div class="hero-content reveal">
@@ -1456,7 +1464,7 @@
         EH
         <span class="text-accent">COMMUNICATIONS</span>
       </h1><br>
-      <span>ELYSIAN HUES</span><br>
+      <span style="letter-spacing: 0.5em;">ELYSIAN HUES</span><br>
       <div class="hero-line"></div>
       <p class="hero-sub">Strategy meets narrative.<br>Brands become stories.</p>
       <div class="hero-ctas">
@@ -1905,6 +1913,13 @@
 
       window.addEventListener('load', requestNavThemeSync);
       requestNavThemeSync();
+
+      // Scroll-position-based background: transparent at top, dark when scrolled
+      const updateNavScrolled = () => {
+        nav.classList.toggle('nav-scrolled', window.scrollY > 80);
+      };
+      window.addEventListener('scroll', updateNavScrolled, { passive: true });
+      updateNavScrolled();
     }
   </script>
 

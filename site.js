@@ -101,6 +101,13 @@
 
     window.addEventListener("load", requestNavThemeSync);
     requestNavThemeSync();
+
+    // Scroll-position-based background: transparent at top, dark when scrolled
+    const updateNavScrolled = () => {
+      header.classList.toggle("nav-scrolled", window.scrollY > 80);
+    };
+    window.addEventListener("scroll", updateNavScrolled, { passive: true });
+    updateNavScrolled();
   }
 
   const reveals = document.querySelectorAll(".reveal");
